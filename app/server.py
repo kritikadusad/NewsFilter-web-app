@@ -198,7 +198,7 @@ def userpreferences():
 
     # print("Headlines for today: ", news["filtered"])
     print("********************** RESPONSE SENT ", len(articles))
-    return jsonify(articles[0])
+    return jsonify(articles)
 
 
 def get_articles(news_type, trig_words):

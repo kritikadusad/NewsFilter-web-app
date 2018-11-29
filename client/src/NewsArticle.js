@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+// import Articlelist from "./Articlelist";
 
 class NewsArticle extends Component {
   constructor(props){
@@ -20,20 +20,18 @@ this.state={
 
 
 
+render(props) {
+  return(
+    <div>
+    <b>{this.props.title}</b><br/>
+    {this.props.content}<br/>
+    {this.props.url}<br/>
+    {this.props.urlToImage}<br/>
+    </div>
+    );
+  }
+}
+export default NewsArticle;
 
-      // {this.props.urlToImage}<br/>
 
 
-      render(props) {
-        return  (
-          <div>
-          <b>{this.props.title}</b><br/>
-          {this.props.content}<br/>
-          {this.props.url}<br/>
-          {this.props.urlToImage}<br/>
-          </div>
-          );
-      }
-    }
-
-    export default NewsArticle;
