@@ -130,11 +130,6 @@ def user_info():
     return jsonify(user_json)
 
 
-@app.route("/hello", methods=["POST"])
-def hello():
-    return jsonify("namaste")
-
-
 @app.route('/preferences-updated', methods=['POST'])
 def update_preferences(user_id):
     """ Preferences for the user are updated in the database"""
@@ -191,18 +186,19 @@ def userpreferences():
 
     # Main call to the API is below.
     filtered_articles = get_articles(news_type, trig_words)
+    articles = []
+    if filtered_articles:
+        for article in filtered_articles:
+            dict = {}
+            dict["title"] = article["title"]
+            dict["content"] = article["content"]
+            dict["url"] = article["url"]
+            dict["urlToImage"] = article["urlToImage"]
+            articles.append(dict)
 
-    if not filtered_articles:
-        # This is when an empty list of news is returned after API request
-        result = 'No news found.'
-        articles = []
-    else:
-        result = "Today's news"
-        articles = filtered_articles
-    news = {"result": result, "articles": articles}
     # print("Headlines for today: ", news["filtered"])
     print("********************** RESPONSE SENT ", len(articles))
-    return jsonify(news["articles"])
+    return jsonify(articles[0])
 
 
 def get_articles(news_type, trig_words):
