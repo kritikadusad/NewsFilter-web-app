@@ -3,7 +3,8 @@
 # I have used only letter t
 from jinja2 import StrictUndefined
 import os
-from flask import (Flask, render_template, redirect, request, flash, session, jsonify, json)
+from flask import (Flask, render_template, redirect,
+                   request, flash, session, jsonify, json)
 from flask_cors import CORS, cross_origin
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -19,7 +20,8 @@ import bcrypt
 from six import u
 newsapi = NewsApiClient(api_key=os.environ.get('MY_KEY_NAME'))
 
-app = Flask(__name__, template_folder="../client/public", static_folder="../client/src")
+app = Flask(__name__, template_folder="../client/public",
+            static_folder="../client/src")
 CORS(app)
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "ABC"
@@ -28,8 +30,7 @@ app.secret_key = "ABC"
 app.jinja_env.undefined = StrictUndefined
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+@app.route('/', methods=["POST"])
 def catch_all(path):
     """Homepage."""
     # session.clear()
@@ -79,12 +80,16 @@ def register_form():
 def logged_in():
     """Logged in or not"""
 
-    email = str(request.form.get("email"))
-    password = u(request.form.get("password"))
+    # This is how react (front-end) sends info to this route.
+    data = request.data
+    email = json.loads(data)["email"]
+    print("Email provided: ", email)
+    password = json.loads(data)["password"]
+    print("Paswword provided: ", password)
 
-    # Checking to see if this email exists in the database. Making a user
-    # object.
+    # Checking to see if this email exists in the database. Making a user object.
     user = User.query.filter(User.email == email).first()
+    print("User found: ", user.email)
 
     # Checking to see if the password matches for the email provided by the
     # user.
@@ -93,14 +98,16 @@ def logged_in():
             # If the check works for the email and matching password, news options page is rendered.
             # Otherwise, the login page is rendered again.
             session['user'] = email
+            print("Session made:", session['user'])
             # User id is saved in this variable.
             user_id = int(user.user_id)
+            print("User id: ", user_id)
             flash("You have successfully logged in!")
-            return redirect(f"news-options/{user_id}")
+            return jsonify(f"news-options/{user_id}")
         else:
-            return redirect("/")
+            return jsonify("Incorrect password")
     else:
-        return redirect("/")
+        return jsonify("Couldn't find your email. Please register")
 
 
 @app.route('/logout')
@@ -153,20 +160,6 @@ def update_preferences(user_id):
     return render_template('preferences_updated.html', user_id=user_id)
 
 
-@app.route('/news-options/<user_id>')
-def news_options(user_id):
-    """ This displays a page with following news options- world, technology, politics, entertainment"""
-    # return render_template('news_options.html', user_id=user_id)
-    return render_template('news_filter.html', user_id=user_id)
-
-
-# @app.route('/hello')
-# def hello():
-#     return render_template('login.html')
-
-# This is where bulk of the back-end work is happening...
-
-
 @app.route('/filtered-news', methods=['POST'])
 def userpreferences():
     """Gets user's preference of news and makes a query to get user's trigger words """
@@ -191,7 +184,7 @@ def userpreferences():
         for article in filtered_articles:
             dict = {}
             dict["title"] = article["title"]
-            dict["content"] = article["content"]
+            dict["description"] = article["description"]
             dict["url"] = article["url"]
             dict["urlToImage"] = article["urlToImage"]
             articles.append(dict)

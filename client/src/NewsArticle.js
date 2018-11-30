@@ -2,36 +2,28 @@ import React, { Component } from "react";
 // import Articlelist from "./Articlelist";
 
 class NewsArticle extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-// initialize the state
-this.state={
-  news: []
-}
-}
-// getUser = () => {
-//   fetch('/user.json')
-//   .then(response => response.json())
-//   .then(data => {
-//     const user_id = data.user_id
-//     return user_id
-//   });
-// }
+        // initialize the state
+        this.state = {
+          news: []
+        }
+      }
 
 
-
-render(props) {
-  return(
-    <div>
-    <b>{this.props.title}</b><br/>
-    {this.props.content}<br/>
-    {this.props.url}<br/>
-    {this.props.urlToImage}<br/>
-    </div>
-    );
+    render(props) {
+      return (
+        <div>
+        <b>{this.props.title}</b><br/>
+        {this.props.description}<br/>
+        <button href={this.props.url} target="_black"></button><br/>
+        <img src={this.props.urlToImage} alt=""/>
+        </div>
+        );
+    }
   }
-}
-export default NewsArticle;
+  export default NewsArticle;
 
 
 
+//
