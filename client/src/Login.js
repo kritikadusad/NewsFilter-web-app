@@ -1,80 +1,93 @@
 import React, { Component } from "react";
+import {
+  Route,
+  HashRouter
+} from "react-router-dom";
+
+import Articlelist from "./Articlelist";
 
 const API = "http://localhost:5000/logged-in";
+
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
-
-    this.handleChange = this.handleChange.bind(this);
+    this.state = {status: "init",
+                  email: "",
+                  password: ""};
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleEmailChange(event) {
+    this.setState({
+                  email: event.target.value,
+                  });
   }
 
+  handlePasswordChange(event) {
+    this.setState({
+                  password: event.target.value,
+                  });
+  }
   handleSubmit(event) {
     console.log("Sending request to server");
+    event.preventDefault();
+    const data = new FormData(event.target)     
         fetch(API, {
           method: 'POST',
-          body: JSON.stringify({ "email" : "hello@gmail.com", 
-            "password": "hello"})
+          body: JSON.stringify({"email": this.state.email, 
+            "password": this.state.password})
         })
         .then(response => response.json())
-        .then(data => this.setState({ user: data }))
-    event.preventDefault();
+        .then(server_status => this.setState({ status: server_status }))
+    
   }
 
   render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          User ID:
-          <input 
-            type="email" 
-            name="email" 
-            value={this.state.email} 
-            onChange={this.handleChange} 
-          />
-        </label>
-        <label>
-          Password:
-          <input 
-          type="password" 
-          name="password"
-          value={this.state.password} 
-          onChange={this.handleChange}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+    const { status, email, password } = this.state;
+    if (this.state.status === "success") {
+      return( <Articlelist/> );
+    } 
+    else {
+        let message = "";
+        if (this.state.status === "init") {
+          message = "Welcome! Please login to read filtered news...";
+        }
+        else {
+          message = "Incorrect details.";
+        }
 
-      <div>
-            <HashRouter>
-            <div>
-            <h1>News Options</h1>
-            <ul className="header">
-            <li><NavLink to="/newsarticle" onClick={()=>{this.fetchNews("entertainment")}}>
-            Entertainment
-            </NavLink></li>
-            <li><NavLink to="/newsarticle" onClick={()=>{this.fetchNews("world")}}>
-            World
-            </NavLink></li>
-            <li><NavLink to="/newsarticle" onClick={()=>{this.fetchNews("technology")}}>
-            Technology
-            </NavLink></li>
-            </ul>
-            <div className="content">
-            <Route exact path="/newsarticle" component={NewsArticle}/>
-            <Route path="/newsarticle" component={NewsArticle}/>
-            <Route path="/newsarticle" component={NewsArticle}/>
-            </div>
-            </div>
-            </HashRouter>
-    );
+      return(
+        <div>
+          <h2> {message} </h2>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              User ID:
+              <input 
+                type="email" 
+                name="email"
+                value = {this.state.email}
+                onChange = {this.handleEmailChange}
+                required
+              />
+            </label>
+            <label>
+              Password:
+              <input 
+              type="password" 
+              name="password" 
+              value = {this.state.password} 
+              onChange = {this.handlePasswordChange}             
+              required
+              />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      )
+    }
   }
 }
-
 
     export default Login;

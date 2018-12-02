@@ -53,9 +53,17 @@ class Articlelist extends Component {
             <li><NavLink to="/newsarticle" onClick={()=>{this.fetchNews("technology")}}>
             Technology
             </NavLink></li>
+            <li><NavLink to="/newsarticle" onClick={()=>{this.fetchNews("politics")}}>
+            Politics
+            </NavLink></li>
+            <li><NavLink to="/newsarticle" onClick={()=>{this.fetchNews("sports")}}>
+            Sports
+            </NavLink></li>
             </ul>
             <div className="content">
             <Route exact path="/newsarticle" component={NewsArticle}/>
+            <Route path="/newsarticle" component={NewsArticle}/>
+            <Route path="/newsarticle" component={NewsArticle}/>
             <Route path="/newsarticle" component={NewsArticle}/>
             <Route path="/newsarticle" component={NewsArticle}/>
             </div>

@@ -14,16 +14,12 @@ class NewsArticle extends Component {
     render(props) {
       return (
         <div>
-        <b>{this.props.title}</b><br/>
-        {this.props.description}<br/>
-        <button href={this.props.url} target="_black"></button><br/>
-        <img src={this.props.urlToImage} alt=""/>
+          <b>{this.props.title}</b><br/>
+          {this.props.description}<br/>
+          <a href={this.props.url} target="_black"></a><br/>
+          <img src={this.props.urlToImage} alt=""/>
         </div>
         );
     }
   }
   export default NewsArticle;
-
-
-
-//

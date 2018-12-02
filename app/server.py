@@ -30,7 +30,7 @@ app.secret_key = "ABC"
 app.jinja_env.undefined = StrictUndefined
 
 
-@app.route('/', methods=["POST"])
+@app.route('/')
 def catch_all(path):
     """Homepage."""
     # session.clear()
@@ -85,11 +85,10 @@ def logged_in():
     email = json.loads(data)["email"]
     print("Email provided: ", email)
     password = json.loads(data)["password"]
-    print("Paswword provided: ", password)
+    print("Password provided: ", password)
 
     # Checking to see if this email exists in the database. Making a user object.
     user = User.query.filter(User.email == email).first()
-    print("User found: ", user.email)
 
     # Checking to see if the password matches for the email provided by the
     # user.
@@ -103,7 +102,7 @@ def logged_in():
             user_id = int(user.user_id)
             print("User id: ", user_id)
             flash("You have successfully logged in!")
-            return jsonify(f"news-options/{user_id}")
+            return jsonify("success")
         else:
             return jsonify("Incorrect password")
     else:
