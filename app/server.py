@@ -44,36 +44,33 @@ def catch_all(path):
         # return render_template("homepage.html")
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=["POST"])
 def register_form():
     """Registration form that takes email address, password and trigger words."""
 
     # Reg form is rendered when you go to page. When it is submitted, a
     # post request is made and if user's email is not in database then
     # it gets added and redirected to the homepage.
-    if request.method == 'GET':
-        return render_template("registration_form.html")
 
+    data = request.data
+    email = json.loads(data)["email"]
+    print("Email provided: ", email)
+    password = json.loads(data)["password"]
+    print("Password provided: ", password)
+    trigger = json.loads(data)["trigger"]
+    print(trigger)
+
+    # Getting all
+    user_list = db.session.query(User.email).all()
+    if user_email not in user_list:
+        new_user = User(email=user_email,
+                        password=hashed_password,
+                        trig=trig_words)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify("successfully added")
     else:
-        user_email = request.form.get("email")
-        user_password = request.form.get("password")
-        hashed_password = hash_password(user_password)
-
-        # trig_words is a list with one or multiple words.
-        trig_words = request.form.getlist("trig_word")
-        print(trig_words)
-
-        # Getting all
-        user_list = db.session.query(User.email).all()
-
-        if user_email not in user_list:
-            new_user = User(email=user_email,
-                            password=hashed_password,
-                            trig=trig_words)
-            db.session.add(new_user)
-            db.session.commit()
-
-        return redirect("/")
+        return jsonify("user already registered.")
 
 
 @app.route('/logged-in', methods=['POST'])
@@ -83,9 +80,9 @@ def logged_in():
     # This is how react (front-end) sends info to this route.
     data = request.data
     email = json.loads(data)["email"]
-    print("Email provided: ", email)
+    # print("Email provided: ", email)
     password = json.loads(data)["password"]
-    print("Password provided: ", password)
+    # print("Password provided: ", password)
 
     # Checking to see if this email exists in the database. Making a user object.
     user = User.query.filter(User.email == email).first()
