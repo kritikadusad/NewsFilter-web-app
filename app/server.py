@@ -169,11 +169,12 @@ def userpreferences():
     # Below is a request to get the type of news the user has selected to read.
     data = request.data
     news_type = json.loads(data)["option"]
-    # user_id = json.loads(data)["userid"]
+    logged_user = json.loads(data)["user_email"]
+    print("User logged in is: ", logged_user)
     print("News option selected: ", news_type)
     # print("User logged in:", user_id)
     # Making a user object to access trigger word for that user.
-    user = User.query.get('{}'.format(2))
+    user = User.query.filter_by(email=logged_user).first()
 
     trig_words = user.trig
 
