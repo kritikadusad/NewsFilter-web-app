@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import {
-  Route,
-  HashRouter,
-  NavLink
-} from "react-router-dom";
+// import {
+//   Route,
+//   HashRouter,
+//   NavLink
+// } from "react-router-dom";
 
 import Articlelist from "./Articlelist";
 import Register from "./Register";
@@ -37,9 +37,10 @@ class Login extends Component {
                   });
   }
   handleSubmit(event) {
+    event.preventDefault();
     console.log("Sending request to server");
-    
-    const data = new FormData(event.target)     
+    const data = new FormData(event.target)   
+
     fetch(API, {
       method: 'POST',
       body: JSON.stringify({"email": this.state.email, 
@@ -47,16 +48,18 @@ class Login extends Component {
     })
     .then(response => response.json())
     .then(server_status => this.setState({ status: server_status }))
+    console.log(this.state.status)  
   }
 
   fetchRegister(event) {
     console.log("Fetch registration form")
-    this.setState({
-                  status: "register"
-    });
-  }
+    event.preventDefault();
+    this.setState((state) => {
+    // Important: read `state` instead of `this.state` when updating.
+    return {status: "register"}
+  });
+}
   
-
 
   render() {
     const { status, email, password } = this.state;
@@ -71,6 +74,9 @@ class Login extends Component {
         let message = "";
         if (this.state.status === "init") {
           message = "Welcome! Please login to read filtered news...";
+        }
+        else if (this.state.status === "successfully added"){
+          message = "Successfully registered. You can login now..."
         }
         else {
           message = "Incorrect details.";
@@ -96,7 +102,7 @@ class Login extends Component {
                 type="password" 
                 name="password" 
                 value = {this.state.password} 
-                onChange = {this.handlePasswordChange}             
+                onChange = {this.handlePasswordChange} 
                 required
                 />
               </label>
@@ -104,7 +110,6 @@ class Login extends Component {
             </form><br/><br/>
             <button onClick={this.fetchRegister}>Register</button> 
           </div>
-
       )
     }
   }

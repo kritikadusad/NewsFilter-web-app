@@ -40,6 +40,7 @@ class Articlelist extends Component {
 
           return (
             <div>
+            <button>LogOut</button>
             <HashRouter>
             <div>
             <h1>News Options</h1>
@@ -61,7 +62,7 @@ class Articlelist extends Component {
             </NavLink></li>
             </ul>
             <div className="content">
-            <Route exact path="/newsarticle" component={NewsArticle}/>
+            <Route path="/newsarticle" component={NewsArticle}/>
             <Route path="/newsarticle" component={NewsArticle}/>
             <Route path="/newsarticle" component={NewsArticle}/>
             <Route path="/newsarticle" component={NewsArticle}/>

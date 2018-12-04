@@ -98,11 +98,13 @@ def logged_in():
             # User id is saved in this variable.
             user_id = int(user.user_id)
             print("User id: ", user_id)
-            flash("You have successfully logged in!")
+            print("You have successfully logged in!")
             return jsonify("success")
         else:
+            print("Password incorrect.")
             return jsonify("Incorrect password")
     else:
+        print("Couldn't find the given email. ")
         return jsonify("Couldn't find your email. Please register")
 
 
