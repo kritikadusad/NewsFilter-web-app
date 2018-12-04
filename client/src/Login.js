@@ -39,8 +39,6 @@ class Login extends Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log("Sending request to server");
-  
-
     fetch(API, {
       method: 'POST',
       body: JSON.stringify({"email": this.state.email, 
@@ -56,17 +54,17 @@ class Login extends Component {
     event.preventDefault();
     this.setState((state) => {
     // Important: read `state` instead of `this.state` when updating.
-    return {status: "register",
-    email: "", 
-    password: "",
-    triggers:""}
-  });
-}
+      return {status: "register",
+      email: "", 
+      password: "",
+      triggers:""}
+    });
+  }
   
 
   render() {
     if (this.state.status === "success") {
-      return( <Articlelist logged_user={this.state.email}/> );
+      return (<Articlelist logged_user={this.state.email}/> );
     } 
     else if (this.state.status === "register"){
       return (<Register/>);

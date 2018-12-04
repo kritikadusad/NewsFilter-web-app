@@ -1,6 +1,5 @@
 """Filtered News"""
-# Please note that the word trigger itself can elicit negative feelings. To address this,
-# I have used only letter t
+
 from jinja2 import StrictUndefined
 import os
 from flask import (Flask, render_template, redirect,
@@ -30,20 +29,6 @@ app.secret_key = "ABC"
 app.jinja_env.undefined = StrictUndefined
 
 
-@app.route('/')
-def catch_all(path):
-    """Homepage."""
-    # session.clear()
-# Here, we are checking if the user is logged in (session has 'user' key)
-    if 'user' in session:
-        user = User.query.filter(User.email == session['user']).first()
-        user_id = int(user.user_id)
-        return render_template("log_in_homepage.html", user_id=user_id)
-    else:
-        return render_template("index.html", user_id=2)
-        # return render_template("homepage.html")
-
-
 @app.route('/register', methods=["POST"])
 def register_form():
     """Registration form that takes email address, password and trigger words."""
@@ -54,27 +39,28 @@ def register_form():
 
     data = request.data
     email = json.loads(data)["email"]
-    print("Email provided: ", email)
+    # print("Email provided: ", email)
     password = json.loads(data)["password"]
-    print("Password provided: ", password)
-    triggers = json.loads(data)["triggers"].split(",")
-    print(triggers)
+    # print("Password provided: ", password)
+    # Triggers are put into a list of strings.
+    triggers = json.loads(data)["triggers"].split(", ")
+    # print(triggers)
 
-    # Getting all
+    # Checking to see if the email provided is in the database
+    # already.
     email_in_db = User.query.filter_by(email=email).first()
-    # db.session.query(User.email).all()
 
     if email_in_db is None:
-        print(email_in_db)
+        # print(email_in_db)
         new_user = User(email=email,
                         password=hash_password(password),
                         trig=triggers)
         db.session.add(new_user)
         db.session.commit()
-        print(f"New user created {email}")
+        # print(f"New user created {email}")
         return jsonify("successfully added")
     else:
-        print(f"User already registered {email}")
+        # print(f"User already registered {email}")
         return jsonify("user already registered.")
 
 
@@ -85,41 +71,40 @@ def logged_in():
     # This is how react (front-end) sends info to this route.
     data = request.data
     email = json.loads(data)["email"]
-    print("Email provided: ", email)
+    # print("Email provided: ", email)
     password = json.loads(data)["password"]
-    print("Password provided: ", password)
+    # print("Password provided: ", password)
 
-    # Checking to see if this email exists in the database. Making a user object.
-    user = User.query.filter(User.email == email).first()
+    # Checking to see if this email exists in the database.
+    # Making a user object.
+    email_in_db = User.query.filter(User.email == email).first()
 
     # Checking to see if the password matches for the email provided by the
     # user.
-    if user:
-        if bcrypt.checkpw(password.encode('utf8'), user.password):
-            # If the check works for the email and matching password, news options page is rendered.
-            # Otherwise, the login page is rendered again.
+    if email_in_db:
+        if bcrypt.checkpw(password.encode('utf8'), email_in_db.password):
+            # If the check works for the email and matching password,
+            # news options page is rendered. Otherwise, the login
+            # page is rendered again.
             session['user'] = email
-            print("Session made:", session['user'])
-            # User id is saved in this variable.
-            user_id = int(user.user_id)
-            print("User id: ", user_id)
-            print("You have successfully logged in!")
+
+            # print("User id: ", user_id)
+            # print("You have successfully logged in!")
             return jsonify("success")
         else:
-            print("Password incorrect.")
+            # print("Password incorrect.")
             return jsonify("Incorrect password")
     else:
-        print("Couldn't find the given email. ")
+        # print("Couldn't find the given email. ")
         return jsonify("Couldn't find your email. Please register")
 
 
-@app.route('/logout')
+@app.route("/logout")
 def logout():
     """Logged out and session cleared."""
-# This is how you clear a session. Very important when logging out.
+    data = request.data
     session.clear()
-    flash("Logged out!")
-    return redirect("/")
+    return jsonify("logged out")
 
 
 @app.route('/user-preferences')
