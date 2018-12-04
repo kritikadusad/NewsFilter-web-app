@@ -12,7 +12,8 @@ class Articlelist extends Component {
     super(props);
     // initialize the state
     this.state = {
-      articles: "Loading news "
+      articles: "Loading news",
+      logged_user: this.props.logged_user
     };
   }
 
@@ -20,7 +21,8 @@ class Articlelist extends Component {
     console.log("article list fetched");
     fetch(API, {
       method: 'POST',
-      body: JSON.stringify({ "option": option })
+      body: JSON.stringify({ "option": option,
+      "user_email": this.props.logged_user })
     })
     .then(response => response.json())
     .then(data => this.setState({ articles: data }))
@@ -67,11 +69,11 @@ class Articlelist extends Component {
         </div>
         </div>
         </HashRouter>
-        {articleList.map(article=><NewsArticle key={article.title} title={article.title} description={article.description} url={article.url} urlToImage={article.urlToImage}/>)}
+        {articleList.map(article=><NewsArticle key = {article.title} title = {article.title} description = {article.description} url = {article.url} urlToImage = {article.urlToImage}/>)}
         </div>
       );
     }
   }
 }
 
-    export default Articlelist;
+export default Articlelist;

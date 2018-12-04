@@ -66,7 +66,7 @@ class Login extends Component {
 
   render() {
     if (this.state.status === "success") {
-      return( <Articlelist/> );
+      return( <Articlelist logged_user={this.state.email}/> );
     } 
     else if (this.state.status === "register"){
       return (<Register/>);
