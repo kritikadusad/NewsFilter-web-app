@@ -3,7 +3,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import ARRAY
-from datetime import date
+import datetime as dt
 
 db = SQLAlchemy()
 
@@ -13,15 +13,15 @@ class User(db.Model):
 
     __tablename__ = 'users'
 
-    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String(50), nullable=True)
     password = db.Column(db.Binary, nullable=True)
-    trig = db.Column(ARRAY(db.String(100)), nullable=False)
+    triggers = db.Column(ARRAY(db.String(100)), nullable=False)
 
     def __repr__(self):
         """Provide useful output when printing."""
 
-        return "<User {} user_id={} triggers={}>".format(username=self.email, user_id=self.user_id, trigger=self.trig)
+        return "<User {} triggers={}>".format(self.user_id, self.trig)
 
 
 class BannedNews(db.Model):
@@ -29,15 +29,15 @@ class BannedNews(db.Model):
 
     __tablename__ = 'bannednews'
 
-    news_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    trig_article = db.Column(db.String(200), nullable=False)
-    trig_words = db.Column(db.String(100), nullable=False)
-    date_added = db.Column(db.String(15), nullable=False)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    article = db.Column(db.String(200), nullable=False)
+    triggers = db.Column(db.String(100), nullable=False)
+    created = db.Column(db.DateTime, default=dt.datetime.utcnow)
 
     def __repr__(self):
         """Provide useful output when printing."""
 
-        return f"<News_id={self.news_id} triggers={self.trig_words} date_added={self.trig_words}>"
+        return f"<News_id={self.news_id} triggers={self.trig_words}, {self.created}>"
 
 
 # -------------------------------------------------------------------
