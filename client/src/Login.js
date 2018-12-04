@@ -39,7 +39,7 @@ class Login extends Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log("Sending request to server");
-    const data = new FormData(event.target)   
+  
 
     fetch(API, {
       method: 'POST',
@@ -56,18 +56,20 @@ class Login extends Component {
     event.preventDefault();
     this.setState((state) => {
     // Important: read `state` instead of `this.state` when updating.
-    return {status: "register"}
+    return {status: "register",
+    email: "", 
+    password: "",
+    triggers:""}
   });
 }
   
 
   render() {
-    const { status, email, password } = this.state;
     if (this.state.status === "success") {
       return( <Articlelist/> );
     } 
     else if (this.state.status === "register"){
-      return (<Register />);
+      return (<Register/>);
     }
     
     else {

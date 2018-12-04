@@ -57,19 +57,24 @@ def register_form():
     print("Email provided: ", email)
     password = json.loads(data)["password"]
     print("Password provided: ", password)
-    trigger = json.loads(data)["trigger"]
-    print(trigger)
+    triggers = json.loads(data)["triggers"].split(",")
+    print(triggers)
 
     # Getting all
-    user_list = db.session.query(User.email).all()
-    if user_email not in user_list:
-        new_user = User(email=user_email,
-                        password=hashed_password,
-                        trig=trig_words)
+    email_in_db = User.query.filter_by(email=email).first()
+    # db.session.query(User.email).all()
+
+    if email_in_db is None:
+        print(email_in_db)
+        new_user = User(email=email,
+                        password=hash_password(password),
+                        trig=triggers)
         db.session.add(new_user)
         db.session.commit()
+        print(f"New user created {email}")
         return jsonify("successfully added")
     else:
+        print(f"User already registered {email}")
         return jsonify("user already registered.")
 
 
@@ -80,9 +85,9 @@ def logged_in():
     # This is how react (front-end) sends info to this route.
     data = request.data
     email = json.loads(data)["email"]
-    # print("Email provided: ", email)
+    print("Email provided: ", email)
     password = json.loads(data)["password"]
-    # print("Password provided: ", password)
+    print("Password provided: ", password)
 
     # Checking to see if this email exists in the database. Making a user object.
     user = User.query.filter(User.email == email).first()
