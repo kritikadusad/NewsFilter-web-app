@@ -9,15 +9,13 @@ import Articlelist from "./Articlelist";
 import Register from "./Register";
 
 
-const API = "http://localhost:5000/logged-in";
+const API = "http://localhost:5000/api/logged-in";
 
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {status: "init",
-                  email: "",
-                  password: ""};
+    this.state = {status: "init"};
   //Bindings: 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -36,14 +34,15 @@ class Login extends Component {
                   password: event.target.value
                   });
   }
+
   handleSubmit(event) {
     console.log("Sending request to server");
     
     const data = new FormData(event.target)     
     fetch(API, {
       method: 'POST',
-      body: JSON.stringify({"email": this.state.email, 
-        "password": this.state.password})
+      body: JSON.stringify({"email": this.refs.email.value, 
+        "password": this.refs.password.value})
     })
     .then(response => response.json())
     .then(server_status => this.setState({ status: server_status }))
@@ -85,6 +84,7 @@ class Login extends Component {
                 <input 
                   type="email" 
                   name="email"
+                  ref="email"
                   value = {this.state.email}
                   onChange = {this.handleEmailChange}
                   required
@@ -94,7 +94,8 @@ class Login extends Component {
                 Password:
                 <input 
                 type="password" 
-                name="password" 
+                name="password"
+                ref="password"
                 value = {this.state.password} 
                 onChange = {this.handlePasswordChange}             
                 required

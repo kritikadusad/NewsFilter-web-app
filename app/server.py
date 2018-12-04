@@ -9,6 +9,7 @@ from flask_cors import CORS, cross_origin
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, BannedNews, connect_to_db, db
+from utils import get_articles, filtering_news
 
 from newsapi import NewsApiClient
 
@@ -44,7 +45,7 @@ def catch_all(path):
         # return render_template("homepage.html")
 
 
-@app.route('/register', methods=["POST"])
+@app.route('/api/register', methods=["POST"])
 def register_form():
     """Registration form that takes email address, password and trigger words."""
 
@@ -52,13 +53,13 @@ def register_form():
     # post request is made and if user's email is not in database then
     # it gets added and redirected to the homepage.
 
-    data = request.data
-    email = json.loads(data)["email"]
-    print("Email provided: ", email)
-    password = json.loads(data)["password"]
-    print("Password provided: ", password)
-    trigger = json.loads(data)["trigger"]
-    print(trigger)
+    data = request.json
+    app.logger.debug('Request data: ', data)
+    print("Request data: ", data)
+
+    email = data.get("email")
+    password = data.get("password")
+    trigger = data.get("trigger")
 
     # Getting all
     user_list = db.session.query(User.email).all()
@@ -68,21 +69,19 @@ def register_form():
                         trig=trig_words)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify("successfully added")
+        return jsonify("successfully added"), 200
     else:
-        return jsonify("user already registered.")
+        return jsonify("user already registered."), 403
 
 
-@app.route('/logged-in', methods=['POST'])
+@app.route('/api/logged-in', methods=['POST'])
 def logged_in():
     """Logged in or not"""
 
     # This is how react (front-end) sends info to this route.
-    data = request.data
-    email = json.loads(data)["email"]
-    # print("Email provided: ", email)
-    password = json.loads(data)["password"]
-    # print("Password provided: ", password)
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
 
     # Checking to see if this email exists in the database. Making a user object.
     user = User.query.filter(User.email == email).first()
@@ -93,17 +92,21 @@ def logged_in():
         if bcrypt.checkpw(password.encode('utf8'), user.password):
             # If the check works for the email and matching password, news options page is rendered.
             # Otherwise, the login page is rendered again.
-            session['user'] = email
-            print("Session made:", session['user'])
             # User id is saved in this variable.
-            user_id = int(user.user_id)
-            print("User id: ", user_id)
+            user_id = user.user_id
+            session['user'] = user_id
+            print("Session made:", session['user'])
+            app.logger.debug(f"User logged in: {user_id}")
+
             flash("You have successfully logged in!")
-            return jsonify("success")
+            # 200 Success, OK
+            return jsonify({'user': user_id}), 200
         else:
-            return jsonify("Incorrect password")
+            # 403 Unpermitted (the server recognizes the user, but not the password)
+            return jsonify("Incorrect password"), 403
     else:
-        return jsonify("Couldn't find your email. Please register")
+        # 401 Unauthenticated (the server does not know who you are.)
+        return jsonify("Couldn't find your email. Please register"), 401
 
 
 @app.route('/logout')
@@ -119,11 +122,10 @@ def logout():
 def change_preferences(user_id):
     """ User can change preference og trigger words or password"""
     user = User.query.get(user_id)
-    trig_words = user.trig
-    return render_template('user_preferences.html', user_id=user_id, trig_words=trig_words)
+    return render_template('user_preferences.html', user=user)
 
 
-@app.route("/user.json")
+@app.route("/api/user.json")
 def user_info():
     """Return information about user as JSON."""
     # user = User.query.filter(User.email == session["user"]).first()
@@ -153,20 +155,20 @@ def update_preferences(user_id):
 
     db.session.commit()
 
-    return render_template('preferences_updated.html', user_id=user_id)
+    return render_template('preferences_updated.html', user=user)
 
 
-@app.route('/filtered-news', methods=['POST'])
+@app.route('/api/filtered-news', methods=['POST'])
 def userpreferences():
     """Gets user's preference of news and makes a query to get user's trigger words """
     # Below is a request to get the type of news the user has selected to read.
-    data = request.data
-    news_type = json.loads(data)["option"]
+    data = request.json
+    news_type = data.get("option")
     # user_id = json.loads(data)["userid"]
     print("News option selected: ", news_type)
     # print("User logged in:", user_id)
     # Making a user object to access trigger word for that user.
-    user = User.query.get('{}'.format(2))
+    user = User.query.get(2)
 
     trig_words = user.trig
 
@@ -178,66 +180,16 @@ def userpreferences():
     articles = []
     if filtered_articles:
         for article in filtered_articles:
-            dict = {}
-            dict["title"] = article["title"]
-            dict["description"] = article["description"]
-            dict["url"] = article["url"]
-            dict["urlToImage"] = article["urlToImage"]
-            articles.append(dict)
+            data = {}
+            data["title"] = article["title"]
+            data["description"] = article["description"]
+            data["url"] = article["url"]
+            data["urlToImage"] = article["urlToImage"]
+            articles.append(data)
 
     # print("Headlines for today: ", news["filtered"])
     print("********************** RESPONSE SENT ", len(articles))
-    return jsonify(articles)
-
-
-def get_articles(news_type, trig_words):
-    """ Sends a request to NewsAPI with user's trigger words and preference for type of news."""
-    # Based on user's preference of news section, providing section news.
-    news_options = {'world': 'bbc.co.uk',
-                    'technology': 'techcrunch.com, theverge.com, hackernews.com',
-                    'politics': 'politico.com',
-                    'entertainment': 'ew.com',
-                    'sports': 'espn.com'}
-
-    domains = news_options[news_type]
-
-    trig_words_str = ''
-    for trig_word in trig_words:
-        trig_words_str += trig_word + ', '
-
-    # Sending request to News API below:
-    all_articles = newsapi.get_everything(q=f'-{trig_words_str}',
-                                          domains=domains,
-                                          from_param=f'{date.today()}',
-                                          to=f'{date.today()}',
-                                          language='en')
-
-    # This is a list of articles objects from the json response returned.
-    # print(all_articles)
-    articles = all_articles['articles']
-    return filtering_news(articles)
-
-
-def filtering_news(articles):
-    """ Make new list of filtered articles by removing articles from the bannednews table. """
-
-    # Making a set of banned news titles.
-    banned_news = BannedNews.query.all()
-    banned_titles = set()
-    for item in banned_news:
-        banned_titles.add(item.trig_article)
-
-    # Filtering news by selecting articles that do not have the triggering
-    # title.
-    if BannedNews:
-        filtered_articles = []
-        for article in articles:
-            if article['title'] not in banned_titles:
-                filtered_articles.append(article)
-    else:
-        filtered_articles = articles
-
-    return filtered_articles
+    return jsonify(articles), 200
 
 
 @app.route('/trig-tagged-news/<user_id>', methods=['POST'])
@@ -275,7 +227,7 @@ def trig_tagging(trig_article, user_id):
 
     db.session.commit()
 
-    return render_template('trigger_submitted.html', user_id=user_id)
+    return render_template('trigger_submitted.html', user=user)
 # ------------------------------------------------------------------------------------------
 # HELPER FUNCTIONS:
 # ------------------------------------------------------------------------------------------
