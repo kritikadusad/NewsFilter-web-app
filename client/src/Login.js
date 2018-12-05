@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import {logInForm, registerButton, logInButton} from "./styles";
 
 import Articlelist from "./Articlelist";
 import Register from "./Register";
-import {Button, Form, Input, Label, FormGroup} from 'reactstrap';
+import {Button, Form, Input, Label, FormGroup, Row, Col} from 'reactstrap';
 
 const API = "http://localhost:5000/logged-in";
 
@@ -68,7 +69,7 @@ class Login extends Component {
     else {
         let message = "";
         if (this.state.status === "init") {
-          message = "Welcome! Please login to read filtered news...";
+          message = "Please login to read filtered news...";
         }
         else if (this.state.status === "successfully added"){
           message = "Successfully registered. You can login now..."
@@ -78,30 +79,34 @@ class Login extends Component {
         }
 
       return(
-        <Form className = "text-center" >
-          <div className="form-signin">
-            <h2 className="h3 mb-3 font-weight-normal"> {message} </h2>
-            <FormGroup onSubmit={this.handleSubmit}>
+        <div style={logInForm}>
+        <Form className = "text-center mx-auto.col-sm-8.col-md-5.hide-sm" 
+        onSubmit={this.handleSubmit}>
+          <Row className = "text-center">
+          <Col className=".col-sm-12 .col-md-6 .offset-md-3">
+            <h2 className="mt-3 h3 mb-3 font-weight-normal"> {message} </h2>
+            </Col>
+          </Row>
+            <FormGroup>
               <Label>
-                User ID:
+        
                 <Input 
                   type="email" 
-                  className = "form-control"
                   placeholder = "Email address"
                   name="email"
                   value = {this.state.email}
                   onChange = {this.handleEmailChange}
                   required
+                  
                 />
               </Label>
               </FormGroup>
             
-            <br/>
+            <FormGroup>
               <Label>
-                Password:
                 <Input 
                 type="password"
-                className = "form-control"
+                
                 placeholder = "Password" 
                 name="password" 
                 value = {this.state.password} 
@@ -110,12 +115,14 @@ class Login extends Component {
                 />
               </Label>
               <br/>
-              <Button type="submit" style= {{backgroundColor: "#1fb58f"}} value="Submit">Submit</Button>
+              </FormGroup>
+              <Button type="submit" style={logInButton}
+              value="Submit">Submit</Button>
             <br/><br/>
-            <Button type="button" style= {{backgroundColor: "#eab126"}} onClick={this.fetchRegister}>Register</Button> 
-            
-          </div>
+
+            <Button type="button" style={registerButton} onClick={this.fetchRegister}>Register</Button> 
         </Form>
+        </div>
       )
     }
   }
