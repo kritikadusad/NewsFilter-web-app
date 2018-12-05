@@ -1,13 +1,8 @@
 import React, { Component } from "react";
-// import {
-//   Route,
-//   HashRouter,
-//   NavLink
-// } from "react-router-dom";
 
 import Articlelist from "./Articlelist";
 import Register from "./Register";
-
+import {Button, Form, Input, Label, FormGroup} from 'reactstrap';
 
 const API = "http://localhost:5000/logged-in";
 
@@ -83,33 +78,44 @@ class Login extends Component {
         }
 
       return(
-          <div>
-            <h2> {message} </h2>
-            <form onSubmit={this.handleSubmit}>
-              <label>
+        <Form className = "text-center" >
+          <div className="form-signin">
+            <h2 className="h3 mb-3 font-weight-normal"> {message} </h2>
+            <FormGroup onSubmit={this.handleSubmit}>
+              <Label>
                 User ID:
-                <input 
+                <Input 
                   type="email" 
+                  className = "form-control"
+                  placeholder = "Email address"
                   name="email"
                   value = {this.state.email}
                   onChange = {this.handleEmailChange}
                   required
                 />
-              </label>
-              <label>
+              </Label>
+              </FormGroup>
+            
+            <br/>
+              <Label>
                 Password:
-                <input 
-                type="password" 
+                <Input 
+                type="password"
+                className = "form-control"
+                placeholder = "Password" 
                 name="password" 
                 value = {this.state.password} 
                 onChange = {this.handlePasswordChange} 
                 required
                 />
-              </label>
-              <input type="submit" value="Submit" /> 
-            </form><br/><br/>
-            <button onClick={this.fetchRegister}>Register</button> 
+              </Label>
+              <br/>
+              <Button type="submit" style= {{backgroundColor: "#1fb58f"}} value="Submit">Submit</Button>
+            <br/><br/>
+            <Button type="button" style= {{backgroundColor: "#eab126"}} onClick={this.fetchRegister}>Register</Button> 
+            
           </div>
+        </Form>
       )
     }
   }
