@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import NewsArticle from "./NewsArticle";
 import Login from "./Login";
+import { Navbar, Jumbotron, Button, Nav, NavItem, eventKey } from 'react-bootstrap';
+import {logInForm, registerButton, logInButton, navigationLink} from "./styles";
 import {
   Route,
   NavLink,
@@ -53,19 +55,24 @@ class Articlelist extends Component {
         console.log(typeof articleList);
         for (let article of this.state.articles) {
           articleList.push(article);
+          console.log(articleList)
         }
 
         return (
-          <div>
+                <div>
+                  <Nav className = "navbar navbar-expand-lg navbar-light bg-light">
+                  <HashRouter className={Nav}>
+                  <NavLink to ="/newsarticle" onClick={()=>{this.fetchNews("entertainment")}}   className="NavItem eventKey={1}">
+                      Entertainment
+                  </NavLink>
+                  </HashRouter>
+            </Nav>
           <button onClick={this.logOut}>LogOut</button>
           <HashRouter>
           <div>
-          <h1>News Options</h1>
-          <ul className="header">
-          <li><NavLink to="/newsarticle" onClick={()=>{this.fetchNews("entertainment")}}>
-          Entertainment
-          </NavLink></li>
-          <li><NavLink to="/newsarticle" onClick={()=>{this.fetchNews("world")}}>
+          <ul className="navigation grid grid-gutters large-grid-fit med-grid-fit small-grid-1of2">
+          
+          <li><NavLink style={navigationLink} to="/newsarticle" onClick={()=>{this.fetchNews("world")}}>
           World
           </NavLink></li>
           <li><NavLink to="/newsarticle" onClick={()=>{this.fetchNews("technology")}}>
@@ -88,6 +95,7 @@ class Articlelist extends Component {
           </div>
           </HashRouter>
           {articleList.map(article=><NewsArticle key = {article.title} title = {article.title} description = {article.description} url = {article.url} urlToImage = {article.urlToImage}/>)}
+            
           </div>
         );
       }
