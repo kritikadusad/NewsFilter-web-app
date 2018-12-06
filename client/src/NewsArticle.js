@@ -12,6 +12,7 @@ class NewsArticle extends Component {
 
 
     render(props) {
+      // console.log("NewsArticle rendering")
       return (
         <div>
           <b>{this.props.title}</b><br/>

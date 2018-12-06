@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-
+import {logInForm, registerButton, logInButton} from "./styles";
+import {Button, Form, Input, Label, FormGroup, Row, Col} from 'reactstrap';
 import Login from "./Login";
 const API = "http://localhost:5000/register";
 
@@ -66,45 +67,51 @@ class Register extends Component {
         message = "Please register here.";
       }
       return(
-              <div>
-                <h2>{message}</h2>
-                <form onSubmit={this.handleSubmit}>
-                  <label>
-                    User ID:
-                    <input 
-                      type="email" 
-                      name="email"
-                      value = {this.state.email}
-                      onChange = {this.handleTheEmailChange}
-                      required
-                    />
-                  </label>
-                  <label>
-                    Password:
-                    <input 
-                    type="password" 
-                    name="password" 
-                    value = {this.state.password} 
-                    onChange = {this.handlePasswordChange}
-                    required
-                    />
-                  </label>
-                  <label>
-                    Triggers:
-                    <input 
-                    type="text" 
-                    name="triggers" 
-                    value = {this.state.triggers} 
-                    onChange = {this.handleTriggerChange}
-                    required
-                    />
-                  </label>
-                  <input type="submit" value="Submit" /> 
-                </form><br/><br/>
-              </div>
-        )
-      }
+        <div style={logInForm}>
+          <Form onSubmit={this.handleSubmit}>
+            <Row className = "text-center">
+              <Col className=".col-sm-12 .col-md-6 .offset-md-3">
+                <h2 className="mt-3 h3 mb-3 font-weight-normal"> {message} </h2>
+              </Col>
+            </Row>
+
+            <FormGroup>
+              <input 
+                type="email" 
+                name="email"
+                placeholder = "Email"
+                value = {this.state.email}
+                onChange = {this.handleTheEmailChange}
+                required/>
+            </FormGroup>
+            <FormGroup>
+              <input 
+                type="password" 
+                name="password" 
+                placeholder = "Password"
+                value = {this.state.password} 
+                onChange = {this.handlePasswordChange}
+                required/>
+                <br/>
+            </FormGroup>
+
+            <FormGroup>
+              <input 
+                type="text" 
+                placeholder="Triggers"
+                name="triggers" 
+                value = {this.state.triggers} 
+                onChange = {this.handleTriggerChange}
+                required/>
+              <br/>
+            </FormGroup>
+            <Button type="submit" value="Submit" style={registerButton} >Register</Button> 
+            <br/><br/>
+          </Form>
+        </div>
+      )
     }
   }
+}
 
 export default Register;

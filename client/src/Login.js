@@ -80,48 +80,42 @@ class Login extends Component {
 
       return(
         <div style={logInForm}>
-        <Form className = "text-center mx-auto.col-sm-8.col-md-5.hide-sm" 
-        onSubmit={this.handleSubmit}>
-          <Row className = "text-center">
-          <Col className=".col-sm-12 .col-md-6 .offset-md-3">
-            <h2 className="mt-3 h3 mb-3 font-weight-normal"> {message} </h2>
-            </Col>
-          </Row>
+          <Form onSubmit={this.handleSubmit}>
+            <Row className = "text-center">
+              <Col className=".col-sm-12 .col-md-6 .offset-md-3">
+                <h2 className="mt-3 h3 mb-3 font-weight-normal"> {message} </h2>
+              </Col>
+            </Row>
+            
             <FormGroup>
               <Label>
-        
                 <Input 
                   type="email" 
                   placeholder = "Email address"
                   name="email"
                   value = {this.state.email}
                   onChange = {this.handleEmailChange}
-                  required
-                  
-                />
+                  required/>
               </Label>
-              </FormGroup>
+            </FormGroup>
             
             <FormGroup>
               <Label>
                 <Input 
                 type="password"
-                
                 placeholder = "Password" 
                 name="password" 
                 value = {this.state.password} 
                 onChange = {this.handlePasswordChange} 
-                required
-                />
+                required/>
               </Label>
               <br/>
-              </FormGroup>
-              <Button type="submit" style={logInButton}
-              value="Submit">Submit</Button>
+            </FormGroup>
+            <Button type="submit" style={logInButton}
+              value="Submit">Log In</Button>
             <br/><br/>
-
             <Button type="button" style={registerButton} onClick={this.fetchRegister}>Register</Button> 
-        </Form>
+          </Form>
         </div>
       )
     }
