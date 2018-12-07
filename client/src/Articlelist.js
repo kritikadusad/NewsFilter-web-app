@@ -65,7 +65,7 @@ class Articlelist extends Component {
                     <span className="navbar-toggler-icon"></span>
                   </button>
                   <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav navbar-right header" >
+                    <ul className="navbar-nav header" >
                       <li className="nav-item">
                         <NavLink className="nav-link active" to="/newsarticle" onClick={()=>{
                           this.fetchNews("world")}
@@ -90,7 +90,7 @@ class Articlelist extends Component {
                       </li>
                                
                     </ul>
-                    <button className="btn btn-outline-success navbar-right" onClick={this.logOut} type="button">
+                    <button className="btn btn-outline-success" onClick={this.logOut} type="button">
                       Log Out
                     </button>
                     </div>
