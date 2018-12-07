@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import NewsArticle from "./NewsArticle";
 import Login from "./Login";
 import { navBar, navLink, logInButton } from "./styles";
-import { Route,  NavLink, HashRouter} from "react-router-dom";
+import { Route,  NavLink, BrowserRouter} from "react-router-dom";
 
 const API = "http://localhost:5000/filtered-news";
 const logoutAPI = "http://localhost:5000/logout";
@@ -50,47 +50,67 @@ class Articlelist extends Component {
         console.log(typeof articleList);
         for (let article of this.state.articles) {
           articleList.push(article);
-          console.log(articleList)
         }
 
         return (
-          <div>
-          <nav className="navbar fixed-top navbar-expand-lg navbar-light" style={ navBar }>
-            <a className="navbar-brand" href="#">Flexi-News</a>
-              <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-              </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <HashRouter>
-              <ul className="navbar-nav nav-fill" >
-                <li className="nav-item">
-                  <NavLink className="nav-link py-0 active" to="/newsarticle" onClick={()=>{this.fetchNews("world")}}>
-                    World
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link py-0" to="/newsarticle" onClick={()=>{this.fetchNews("technology")}}>
-                    Technology
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link py-0" to="/newsarticle" onClick={()=>{this.fetchNews("politics")}}>
-                    Politics
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link py-0" to="/newsarticle" onClick={()=>{this.fetchNews("sports")}}>
-                    Sports
-                  </NavLink>
-                </li>
-                <Route path="/newsarticle" component={NewsArticle}/>
-              </ul>
-              </HashRouter>
-              <button className="btn btn-outline-success" onClick={this.logOut} type="button">Log Out</button>
-            </div>
-          </nav>
-        {articleList.map(article=><NewsArticle key = {article.title} title = {article.title} description = {article.description} url = {article.url} urlToImage = {article.urlToImage}/>)}
-      </div>
+          <span>
+            
+              <BrowserRouter>
+              <div>
+                <nav className="navbar fixed-top navbar-expand-lg navbar-light">
+                  <a className="navbar-brand">NewsFilter</a>
+                  <button className="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                  </button>
+                  <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav navbar-right header" >
+                      <li className="nav-item">
+                        <NavLink className="nav-link active" to="/newsarticle" onClick={()=>{
+                          this.fetchNews("world")}
+                        }>
+                        World
+                        </NavLink>
+                      </li>
+                      <li className="nav-item">
+                        <NavLink className="nav-link" to="/newsarticle" onClick={()=>{this.fetchNews("technology")}}>
+                          Technology
+                        </NavLink>
+                      </li>
+                      <li className="nav-item">
+                        <NavLink className="nav-link" to="/newsarticle" onClick={()=>{this.fetchNews("politics")}}>
+                          Politics
+                        </NavLink>
+                      </li>
+                      <li className="nav-item">
+                        <NavLink className="nav-link" to="/newsarticle" onClick={()=>{this.fetchNews("sports")}}>
+                          Sports
+                        </NavLink>
+                      </li>
+                               
+                    </ul>
+                    <button className="btn btn-outline-success navbar-right" onClick={this.logOut} type="button">
+                      Log Out
+                    </button>
+                    </div>
+                  </nav>
+                  <main role="main">
+                    <div className = "content">
+                      <Route path="/newsarticle" component={NewsArticle}/>
+                    </div>
+                  </main>
+                  </div>
+                  </BrowserRouter>
+                <div className = "row">
+                  {articleList.map(article=>
+                    <div className= "col-sm-4">
+                      <NewsArticle key = {article.title} title = {article.title} description = {article.description}
+                      url = {article.url} urlToImage = {article.urlToImage}/>
+                    </div>)}  
+                </div>
+
+            </span>
         );
       }
     }
