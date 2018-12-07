@@ -164,7 +164,7 @@ def userpreferences():
     trig_words = user.trig
 
     # Calling get_articles function that sends an API request.
-    print(news_type, trig_words)
+    print((news_type, trig_words))
 
     # Main call to the API is below.
     filtered_articles = get_articles(news_type, trig_words)
@@ -190,15 +190,19 @@ def get_articles(news_type, trig_words):
                     'technology': 'techcrunch.com, theverge.com, hackernews.com',
                     'politics': 'politico.com',
                     'entertainment': 'ew.com',
-                    'sports': 'espn.com'}
+                    'sports': 'espn.com',
+                    'guardian': 'theguardian.com'
+
+                    }
 
     domains = news_options[news_type]
+    print("Domain obtained: ", domains)
 
     trig_words_str = ''
     for trig_word in trig_words:
         trig_words_str += trig_word + ', '
 
-    # Sending request to News API below:
+    print("Here, domains is: ", domains)
     all_articles = newsapi.get_everything(q=f'-{trig_words_str}',
                                           domains=domains,
                                           from_param=f'{date.today()}',
@@ -233,7 +237,7 @@ def filtering_news(articles):
     return filtered_articles
 
 
-@app.route('/trig-tagged-news/<user_id>', methods=['POST'])
+@app.route('/trig-tagged-news', methods=['POST'])
 def trig_tagging_news(user_id):
     """Gets the title of triggering article and returns a page with a list of
     triggering words that the user can choose from. """
