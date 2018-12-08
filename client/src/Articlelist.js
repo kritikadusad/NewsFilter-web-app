@@ -44,25 +44,37 @@ class Articlelist extends Component {
   }
 
   render(props) {
+    console.log(this.state);
     if (this.state.status === "logged out"){
       return (<Login/>)
     }
     else {
       let articleList = [];
+      let articlesDiv = <div/>;
       if (this.state.articles && this.state.articles.length > 0) {
         console.log(typeof articleList);
         for (let article of this.state.articles) {
           articleList.push(article);
           console.log(article);
         }
+        articlesDiv = 
+          <div className = "row">
+            {articleList.map(
+              article=>
+                <div className= "col-sm-4">
+                  <NewsArticle key = {article.title} title = {article.title} description = {article.description}
+                  url = {article.url} urlToImage = {article.urlToImage}/>
+                </div>
+              )
+            }  
+          </div>;
       }
 
       return (
         <span>
-          
             <BrowserRouter>
             <div>
-              <nav className="navbar fixed-top navbar-expand-lg navbar-light">
+              <header className="navbar fixed-top navbar-expand-lg navbar-light">
                 <a className="navbar-brand">NewsFilter</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                   data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
@@ -102,28 +114,22 @@ class Articlelist extends Component {
                       <NavLink className="nav-link" to="/newsarticle" onClick={()=>{this.fetchNews("guardian")}}>
                         The Guardian
                       </NavLink>
-                    </li>
-                             
+                    </li>         
                   </ul>
                   <button className="btn btn-outline-success" onClick={this.logOut} type="button">
                     Log Out
                   </button>
                   </div>
-                </nav>
+                </header>
+
                 <main role="main">
                   <div className = "content">
-                    <Route path="/newsarticle" component={NewsArticle} />
+                    <Route path="/newsarticle"/>
                   </div>
                 </main>
                 </div>
                 </BrowserRouter>
-              <div className = "row">
-                {articleList.map(article=>
-                  <div className= "col-sm-4">
-                    <NewsArticle key = {article.title} title = {article.title} description = {article.description}
-                    url = {article.url} urlToImage = {article.urlToImage}/>
-                  </div>)}  
-              </div>
+              {articlesDiv}
 
           </span>
       );

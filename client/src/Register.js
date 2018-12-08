@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import {logInForm, registerButton, logInButton} from "./styles";
-import {Button, Form, Input, Label, FormGroup, Row, Col} from 'reactstrap';
+import {logInForm, registerButton} from "./styles";
+import {Button, Form, FormGroup, Row, Col} from 'reactstrap';
 import Login from "./Login";
 const API = "http://localhost:5000/register";
 

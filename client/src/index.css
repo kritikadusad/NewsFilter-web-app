@@ -1,10 +1,12 @@
-nav.navbar.fixed-top.navbar-expand-lg.navbar-light {
+header.navbar.fixed-top.navbar-expand-lg.navbar-light {
     background-color: #eab126;
 }
 
-button.btn.btn-outline-success {
-    margin-left:830px;
+body { padding-top: 70px; }
 
-}
+/*button.btn.btn-outline-success {
+    padding-left:80px;
+
+}*/
 
 
