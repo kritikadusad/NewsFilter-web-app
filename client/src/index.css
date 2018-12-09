@@ -1,4 +1,4 @@
-header.navbar.fixed-top.navbar-expand-lg.navbar-light {
+header.navbar.fixed-top.navbar-expand-lg {
     background-color: #eab126;
 }
 
@@ -8,7 +8,7 @@ body { padding-top: 70px;
 }
 
 img.card-img-right {
-    height: 100px;
+    height: 100px; 
 }
 
 /*

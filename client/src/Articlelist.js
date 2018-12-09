@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import NewsArticle from "./NewsArticle";
 import Login from "./Login";
-import Empty from "./Empty";
 import { Route,  NavLink, BrowserRouter} from "react-router-dom";
 
 const API = "http://localhost:5000/filtered-news";
@@ -62,10 +61,12 @@ class Articlelist extends Component {
             {articleList.map(
               article=>
                 <div className = "row">
-                  <div className= "col-md-8">
+                  <div className = "col-md-2" />
+                  <div className = "col-md-8">
                     <NewsArticle key = {article.title} title = {article.title} description = {article.description}
                     url = {article.url} urlToImage = {article.urlToImage}/>
                   </div>
+                  <div className = "col-md-2" />
                 </div>
               )
             }  
@@ -86,12 +87,12 @@ class Articlelist extends Component {
                 <div className="collapse navbar-collapse" id="navbarNav">
                   <ul className="navbar-nav header" >
                     <li className="nav-item">
-                      <NavLink className="nav-link active" to="/empty">
+                      <NavLink className="nav-link" to="/empty">
                       Home
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink className="nav-link active" to="/newsarticle" onClick={()=>{
+                      <NavLink className="nav-link" to="/newsarticle" onClick={()=>{
                         this.fetchNews("world")}
                       }>
                       World
@@ -121,18 +122,16 @@ class Articlelist extends Component {
                   <button className="btn btn-outline-success" onClick={this.logOut} type="button">
                     Log Out
                   </button>
-                  </div>
-                </header>
+                </div>
+              </header>
 
-                <main role="main">
-                  <div className = "content">
-                    <Route path="/newsarticle"/>
-                  </div>
-                </main>
+              <main role="main">
+                <div className = "content">
+                  <Route path="/newsarticle"/>
                 </div>
-                </BrowserRouter>
-                <div className = "col-md-4">
-                </div>
+              </main>
+              </div>
+              </BrowserRouter>
               <div className="article-container">
                 {articlesDiv}
               </div>
