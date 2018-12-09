@@ -28,3 +28,4 @@ app/__pycache__/*
 app/requirements.txt
 client/node_modules/*
 client/*.json
+client/src/temp.js

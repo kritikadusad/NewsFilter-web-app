@@ -58,12 +58,14 @@ class Articlelist extends Component {
           console.log(article);
         }
         articlesDiv = 
-          <div className = "row">
+          <div>
             {articleList.map(
               article=>
-                <div className= "col-sm-4">
-                  <NewsArticle key = {article.title} title = {article.title} description = {article.description}
-                  url = {article.url} urlToImage = {article.urlToImage}/>
+                <div className = "row">
+                  <div className= "col-md-8">
+                    <NewsArticle key = {article.title} title = {article.title} description = {article.description}
+                    url = {article.url} urlToImage = {article.urlToImage}/>
+                  </div>
                 </div>
               )
             }  
@@ -129,7 +131,11 @@ class Articlelist extends Component {
                 </main>
                 </div>
                 </BrowserRouter>
-              {articlesDiv}
+                <div className = "col-md-4">
+                </div>
+              <div className="article-container">
+                {articlesDiv}
+              </div>
 
           </span>
       );

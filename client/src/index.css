@@ -2,7 +2,22 @@ header.navbar.fixed-top.navbar-expand-lg.navbar-light {
     background-color: #eab126;
 }
 
-body { padding-top: 70px; }
+body { padding-top: 70px;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Noto Serif SC', serif; 
+}
+
+img.card-img-right {
+    height: 100px;
+}
+
+/*
+p.card-text {
+    position: absolute;
+    left: 5 px;
+    right: 35 px;
+}
+*/
 
 /*button.btn.btn-outline-success {
     padding-left:80px;

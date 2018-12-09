@@ -17,7 +17,8 @@ const style = {
   logInButton: { 
     maxWidth: "800px", 
     margin: '0 auto 10px',
-    backgroundColor: "#1fb58f" 
+    backgroundColor: "#1fb58f", 
+    color: "white"
   }
 }
 

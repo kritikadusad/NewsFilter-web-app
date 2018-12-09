@@ -246,7 +246,7 @@ def trig_tagging_news(user_id):
     return render_template('triggered.html', trig_article=trig_article, user_id=user_id)
 
 
-@app.route('/trig-submitted/<trig_article>/<user_id>', methods=['POST'])
+@app.route('/trig-submitted', methods=['POST'])
 def trig_tagging(trig_article, user_id):
     """Adds the triggering article and trigger word associated with it to the db"""
 
