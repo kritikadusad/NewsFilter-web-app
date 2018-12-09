@@ -54,7 +54,6 @@ class Articlelist extends Component {
         console.log(typeof articleList);
         for (let article of this.state.articles) {
           articleList.push(article);
-          console.log(article);
         }
         articlesDiv = 
           <div>
@@ -78,7 +77,7 @@ class Articlelist extends Component {
             <BrowserRouter>
             <div>
               <header className="navbar fixed-top navbar-expand-lg navbar-light">
-                <a className="navbar-brand">NewsFilter</a>
+                <a href="/" className="navbar-brand">NewsFilter</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                   data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                   aria-label="Toggle navigation">
@@ -86,11 +85,6 @@ class Articlelist extends Component {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                   <ul className="navbar-nav header" >
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/empty">
-                      Home
-                      </NavLink>
-                    </li>
                     <li className="nav-item">
                       <NavLink className="nav-link" to="/newsarticle" onClick={()=>{
                         this.fetchNews("world")}

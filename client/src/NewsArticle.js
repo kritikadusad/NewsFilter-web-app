@@ -1,19 +1,44 @@
 import React, { Component } from "react";
-// import Articlelist from "./Articlelist";
-// TAGAPI = "http://localhost:5000/trig-submitted";
+
+const TRIGGER_UPDATE_API = "http://localhost:5000/trigger-update";
+
 class NewsArticle extends Component {
   constructor(props) {
     super(props);
     // initialize the state
     this.state = {
-      news: []
+      status: "good",
+      title: this.props.title,
+      trigger_words: "",
     };
-    console.log(props);
+
+    this.handleTriggerWordChange = this.handleTriggerWordChange.bind(this);
+    this.handleTriggerSubmit = this.handleTriggerSubmit.bind(this);
+  }
+
+  handleTriggerWordChange(event) {
+    this.setState({
+                  trigger_words: event.target.value
+                  });
+  }
+
+  handleTriggerSubmit(event) {
+    event.preventDefault();
+    console.log("Sending trigger update to server article: " + this.state.title + " words:" + this.state.trigger_words);
+    fetch(TRIGGER_UPDATE_API, {
+      method: 'POST',
+      body: JSON.stringify({"trigger_article": this.state.title, 
+        "trigger_words": this.state.trigger_words})
+    })
+    .then(response => this.setState({ status: "bad" }));
+    console.log("Done trigger update");  
   }
 
   render() {
+    if (this.state.status === "bad") {
+      return <div/>
+    }
     
-    console.log(this.props);
     return (
       <div className = "card flex-md-row mt-4 box-shadow h-md-250">
         <div className = "col-md-9">
@@ -22,10 +47,22 @@ class NewsArticle extends Component {
               <a href = {this.props.url} target = "_black" className = "text-dark">{this.props.title}</a>
             </h4>
             <p className = "card-text">{this.props.description}</p>
+            <div className = "btn-group">
+              <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               
+              </button>
+              <div class="dropdown-menu">
+                <form class="form-inline dropdown-item" onSubmit={this.handleTriggerSubmit}>
+                  <label class="sr-only" for="inlineFormInputName2">Name</label>
+                  <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" onChange = {this.handleTriggerWordChange} value = {this.state.trigger_words} placeholder="Trigger topics"/>
+                  <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
         <div className = "col-md-3 mt-4 mb-4">
-          <img className = "card-img-right flex-auto d-none d-md-block p-1 mx-auto" src = {this.props.urlToImage} alt = "Card image cap"/>
+          <img className = "card-img-right flex-auto d-none d-md-block p-1 mx-auto" src = {this.props.urlToImage} alt = ""/>
         </div>
       </div> 
     );

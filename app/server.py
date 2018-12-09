@@ -237,42 +237,31 @@ def filtering_news(articles):
     return filtered_articles
 
 
-@app.route('/trig-tagged-news', methods=['POST'])
-def trig_tagging_news(user_id):
-    """Gets the title of triggering article and returns a page with a list of
-    triggering words that the user can choose from. """
-
-    trig_article = request.form.get("trig_article")
-    return render_template('triggered.html', trig_article=trig_article, user_id=user_id)
-
-
-@app.route('/trig-submitted', methods=['POST'])
-def trig_tagging(trig_article, user_id):
+@app.route('/trigger-update', methods=['POST'])
+def trig_tagging():
     """Adds the triggering article and trigger word associated with it to the db"""
 
     # Getting a list of news objects:
     trig_news = BannedNews.query.all()
+    print(trig_news)
+
+    data = request.data
+    trig_article = json.loads(data)["trigger_article"]
+    trig_words = json.loads(data)["trigger_words"]
+    print("Trigger update article %s words %s" % (trig_article, trig_words))
 
     # Checking if triggering article is already in the database. If it isn't,
     # adding the article to the news table.
     if trig_article not in trig_news:
-        trig_words = request.form.get("trig_words")
         new_trig_article = BannedNews(trig_article=trig_article,
                                       trig_words=trig_words,
                                       date_added=date.today())
         db.session.add(new_trig_article)
 
-    # Checking for items in trig_news, and deleting old banned news items. Not needed right now.
-    # if trig_news:
-    #     today = str(date.today())
-    #     # Below, I am deleting rows that contain news articles from yesterday and before.
-    #     old_news = BannedNews.query.filter(BannedNews.date_added != today).all()
-    #     for item in old_news:
-    #         db.session.delete(item)
-
     db.session.commit()
 
-    return render_template('trigger_submitted.html', user_id=user_id)
+    return "success"
+
 # ------------------------------------------------------------------------------------------
 # HELPER FUNCTIONS:
 # ------------------------------------------------------------------------------------------
