@@ -1,8 +1,36 @@
 body { 
     padding-top: 70px;
     font-family: 'Open Sans', sans-serif;
-    /*font-family: 'Noto Serif SC', serif; */
-    /*font-family: 'Work Sans', sans-serif;*/
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 header {
@@ -18,17 +46,11 @@ img.card-img-right {
     height: 100px; 
 }
 
-/*
-p.card-text {
-    position: absolute;
-    left: 5 px;
-    right: 35 px;
+button.nf-btn {
+    background-color: #008080ff;
+    color: white;
 }
-*/
 
-/*button.btn.btn-outline-success {
-    padding-left:80px;
-
-}*/
-
-
+div.home {
+    background: news.jpg;
+}

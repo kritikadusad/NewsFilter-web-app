@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import {logInForm, registerButton, logInButton} from "./styles";
-
 import Articlelist from "./Articlelist";
 import Register from "./Register";
-import {Button, Form, Input, Label, FormGroup, Row, Col} from 'reactstrap';
+import {Route, Link, BrowserRouter} from "react-router-dom";
 
 const API = "http://localhost:5000/logged-in";
 
@@ -18,7 +16,6 @@ class Login extends Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.fetchRegister = this.fetchRegister.bind(this);
   }
 
   handleEmailChange(event) {
@@ -45,19 +42,6 @@ class Login extends Component {
     console.log(this.state.status)  
   }
 
-  fetchRegister(event) {
-    console.log("Fetch registration form")
-    event.preventDefault();
-    this.setState((state) => {
-    // Important: read `state` instead of `this.state` when updating.
-      return {status: "register",
-      email: "", 
-      password: "",
-      triggers:""}
-    });
-  }
-  
-
   render() {
     if (this.state.status === "success") {
       return (<Articlelist logged_user={this.state.email}/> );
@@ -69,53 +53,36 @@ class Login extends Component {
     else {
         let message = "";
         if (this.state.status === "init") {
-          message = "Please login to read filtered news...";
+          message = "Please sign in";
         }
         else if (this.state.status === "successfully added"){
-          message = "Successfully registered. You can login now..."
+          message = "Successfully registered, please sign in"
         }
         else {
-          message = "Incorrect details.";
+          message = "Incorrect details";
         }
 
       return(
-        <div style={logInForm}>
-          <Form onSubmit={this.handleSubmit}>
-            <Row className = "text-center">
-              <Col className=".col-sm-12 .col-md-6 .offset-md-3">
-                <h2 className="mt-3 h3 mb-3 font-weight-normal"> {message} </h2>
-              </Col>
-            </Row>
-            
-            <FormGroup>
-              <Label>
-                <Input 
-                  type="email" 
-                  placeholder = "Email address"
-                  name="email"
-                  value = {this.state.email}
-                  onChange = {this.handleEmailChange}
-                  required/>
-              </Label>
-            </FormGroup>
-            
-            <FormGroup>
-              <Label>
-                <Input 
-                type="password"
-                placeholder = "Password" 
-                name="password" 
-                value = {this.state.password} 
-                onChange = {this.handlePasswordChange} 
-                required/>
-              </Label>
-              <br/>
-            </FormGroup>
-            <Button type="submit" style={logInButton}
-              value="Submit">Log In</Button>
-            <br/><br/>
-            <Button type="button" style={registerButton} onClick={this.fetchRegister}>Register</Button> 
-          </Form>
+        <div>
+          <form class="form-signin" onSubmit={this.handleSubmit}>
+            <h1 class="h3 mb-3 font-weight-normal text-center">{message}</h1>
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" name="email" value={this.state.email} onChange={this.handleEmailChange} class="form-control" placeholder="Email address" required autofocus/>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" name="password" value={this.state.password} onChange={this.handlePasswordChange} class="form-control" placeholder="Password" required/>
+            <button class="btn btn-lg btn-block nf-btn" type="submit" value="Submit">Sign in</button>
+
+            <BrowserRouter>
+              <p class="mt-5 mb-3 text-center">
+                <Route path="/register" />
+                <Link to="/register" onClick={() => {this.setState({status: "register"});}}>
+                  Create new account
+                </Link>
+              </p>
+            </BrowserRouter>
+          </form>
+
+          <footer class="mt-5 mb-3 text-muted text-center">Powered by <a href="http://newsapi.org" target="_blank">NewsAPI</a></footer>
         </div>
       )
     }

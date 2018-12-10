@@ -38,7 +38,7 @@ class NewsArticle extends Component {
     if (this.state.status === "bad") {
       return <div/>
     }
-    
+
     return (
       <div className = "card flex-md-row mt-4 box-shadow h-md-250">
         <div className = "col-md-9">
@@ -48,14 +48,14 @@ class NewsArticle extends Component {
             </h4>
             <p className = "card-text">{this.props.description}</p>
             <div className = "btn-group">
-              <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button type="button" class="btn btn-sm dropdown-toggle nf-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                
               </button>
               <div class="dropdown-menu">
                 <form class="form-inline dropdown-item" onSubmit={this.handleTriggerSubmit}>
                   <label class="sr-only" for="inlineFormInputName2">Name</label>
                   <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" onChange = {this.handleTriggerWordChange} value = {this.state.trigger_words} placeholder="Trigger topics"/>
-                  <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                  <button type="submit" class="btn btn-sm mb-2 nf-btn">Submit</button>
                 </form>
               </div>
             </div>

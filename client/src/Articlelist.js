@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NewsArticle from "./NewsArticle";
 import Login from "./Login";
-import { Route,  NavLink, BrowserRouter} from "react-router-dom";
+import {Route,  NavLink, BrowserRouter} from "react-router-dom";
 
 const API = "http://localhost:5000/filtered-news";
 const logoutAPI = "http://localhost:5000/logout";
@@ -120,7 +120,7 @@ class Articlelist extends Component {
                   </li>
                 </ul>
                 <form className="form-inline my-2 my-lg-0">
-                  <button className="btn btn-success my-2 my-sm-0" onClick={this.logOut}>Log Out</button>
+                  <button className="btn my-2 my-sm-0 nf-btn" onClick={this.logOut}>Log Out</button>
                 </form>
               </div>
             </header>
