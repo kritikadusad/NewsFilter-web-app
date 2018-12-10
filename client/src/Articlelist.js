@@ -76,59 +76,67 @@ class Articlelist extends Component {
         <span>
             <BrowserRouter>
             <div>
-              <header className="navbar fixed-top navbar-expand-lg navbar-light">
+            <header className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+              <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNewsFilter" aria-controls="navbarNewsFilter" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+              </button>
+              <div className="collapse navbar-collapse" id="navbarNewsFilter">
                 <a href="/" className="navbar-brand">NewsFilter</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse"
-                  data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                  aria-label="Toggle navigation">
-                  <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                  <ul className="navbar-nav header" >
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/newsarticle" onClick={()=>{
-                        this.fetchNews("world")}
-                      }>
-                      World
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/newsarticle" onClick={()=>{this.fetchNews("technology")}}>
-                        Technology
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/newsarticle" onClick={()=>{this.fetchNews("politics")}}>
-                        Politics
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/newsarticle" onClick={()=>{this.fetchNews("sports")}}>
-                        Sports
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/newsarticle" onClick={()=>{this.fetchNews("guardian")}}>
-                        The Guardian
-                      </NavLink>
-                    </li>         
-                  </ul>
-                  <button className="btn btn-outline-success" onClick={this.logOut} type="button">
-                    Log Out
-                  </button>
-                </div>
-              </header>
+                <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                  <li className="nav-item active">
+                    <NavLink className="nav-link" to="/newsarticle" onClick={()=>{
+                      this.fetchNews("world")}
+                    }>
+                    World
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/newsarticle" onClick={()=>{
+                      this.fetchNews("technology")}
+                    }>
+                    Technology
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/newsarticle" onClick={()=>{
+                      this.fetchNews("politics")}
+                    }>
+                    Politics
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/newsarticle" onClick={()=>{
+                      this.fetchNews("sports")}
+                    }>
+                    Sports
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/newsarticle" onClick={()=>{
+                      this.fetchNews("guardian")}
+                    }>
+                    The Guardian
+                    </NavLink>
+                  </li>
+                </ul>
+                <form className="form-inline my-2 my-lg-0">
+                  <button className="btn btn-success my-2 my-sm-0" onClick={this.logOut}>Log Out</button>
+                </form>
+              </div>
+            </header>
 
-              <main role="main">
-                <div className = "content">
-                  <Route path="/newsarticle"/>
-                </div>
-              </main>
+            <main role="main">
+              <div className = "content">
+                <Route path="/newsarticle"/>
               </div>
-              </BrowserRouter>
-              <div className="article-container">
-                {articlesDiv}
-              </div>
+            </main>
+
+            </div>
+            </BrowserRouter>
+
+            <div className="article-container">
+              {articlesDiv}
+            </div>
 
           </span>
       );

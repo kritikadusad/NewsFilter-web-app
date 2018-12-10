@@ -1,10 +1,17 @@
-header.navbar.fixed-top.navbar-expand-lg {
-    background-color: #eab126;
+body { 
+    padding-top: 70px;
+    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Noto Serif SC', serif; */
+    /*font-family: 'Work Sans', sans-serif;*/
 }
 
-body { padding-top: 70px;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Noto Serif SC', serif; 
+header {
+    font-weight: 500;
+    font-size: 16pt;
+}
+
+a.navbar-brand {
+    font-size: 20pt;
 }
 
 img.card-img-right {
