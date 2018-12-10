@@ -12,12 +12,11 @@ class Register extends Component {
                   password: "",
                   triggers:""
                 };
-//Bindings: 
+  //Bindings: 
   this.handleTheEmailChange = this.handleTheEmailChange.bind(this);
   this.handlePasswordChange = this.handlePasswordChange.bind(this);
   this.handleTriggerChange = this.handleTriggerChange.bind(this);
   this.handleSubmit = this.handleSubmit.bind(this);
- 
   }
 
   handleTheEmailChange(event) {
@@ -61,54 +60,22 @@ class Register extends Component {
     else {
       let message = "";
       if (this.state.status === "user already registered.") {
-        message = "This email is already in use. Please try again.";
+        message = "Email already in use. Please try again.";
       }
       else {
-        message = "Please register here.";
+        message = "Please register here";
       }
       return(
-        <div style={logInForm}>
-          <Form onSubmit={this.handleSubmit}>
-            <Row className = "text-center">
-              <Col className=".col-sm-12 .col-md-6 .offset-md-3">
-                <h2 className="mt-3 h3 mb-3 font-weight-normal"> {message} </h2>
-              </Col>
-            </Row>
-
-            <FormGroup>
-              <input 
-                type="email" 
-                name="email"
-                placeholder = "Email"
-                value = {this.state.email}
-                onChange = {this.handleTheEmailChange}
-                required/>
-            </FormGroup>
-            <FormGroup>
-              <input 
-                type="password" 
-                name="password" 
-                placeholder = "Password"
-                value = {this.state.password} 
-                onChange = {this.handlePasswordChange}
-                required/>
-                <br/>
-            </FormGroup>
-
-            <FormGroup>
-              <input 
-                type="text" 
-                placeholder="Triggers"
-                name="triggers" 
-                value = {this.state.triggers} 
-                onChange = {this.handleTriggerChange}
-                required/>
-              <br/>
-            </FormGroup>
-            <Button type="submit" value="Submit" style={registerButton} >Register</Button> 
-            <br/><br/>
-          </Form>
-        </div>
+        <form className="form-signin" onSubmit={this.handleSubmit}>
+          <h1 className="h3 mb-3 font-weight-normal text-center">{message}</h1>
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="email" value={this.state.email} onChange={this.handleEmailChange} class="form-control" placeholder="Email address" required autofocus/>
+          <label for="inputPassword" className="sr-only">Password</label>
+          <input type="password" value={this.state.password} onChange={this.handlePasswordChange} className="form-control" placeholder="Password" required/>
+          <label for="inputTriggers" className="sr-only">Triggers</label>
+          <input type="triggers" value={this.state.triggers} onChange={this.handleTriggerChange} className="form-control" placeholder="Triggers" required/>
+          <button className="btn btn-lg btn-block nf-btn" type="submit" value="Submit">Create Account</button>
+        </form>
       )
     }
   }
