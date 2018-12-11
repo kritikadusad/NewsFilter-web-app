@@ -1,6 +1,51 @@
 body { 
-    padding-top: 70px;
     font-family: 'Open Sans', sans-serif;
+}
+
+div.article-body {
+    padding-top: 70px;
+}
+
+.login-background-image {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
+  display: block;
+  background-image: url('news.png');
+  width: 1500px;
+  height: 800px;
+
+  filter: opacity(0.6) grayscale(100%);
+}
+
+.login-message {
+  padding-top: 150px;
+}
+
+h1{
+    font-weight: 700;
+    color: #008080ff;
+}
+.login-content {
+  position: fixed;
+  left: 0;
+  right: 0;
+  padding-top: 100px;
+  z-index: 9999;
+}
+.register-message {
+  padding-top: 100px;
+}
+.register-content {
+  position: fixed;
+  left: 0;
+  right: 0;
+  padding-top: 200px;
+  z-index: 9999;
+}
+.login-card {
 }
 
 .form-signin {

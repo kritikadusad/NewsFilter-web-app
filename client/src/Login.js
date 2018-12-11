@@ -64,25 +64,50 @@ class Login extends Component {
 
       return(
         <div>
-          <form class="form-signin" onSubmit={this.handleSubmit}>
-            <h1 class="h3 mb-3 font-weight-normal text-center">{message}</h1>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" name="email" value={this.state.email} onChange={this.handleEmailChange} class="form-control" placeholder="Email address" required autofocus/>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="password" value={this.state.password} onChange={this.handlePasswordChange} class="form-control" placeholder="Password" required/>
-            <button class="btn btn-lg btn-block nf-btn" type="submit" value="Submit">Sign in</button>
+            <div className="login-background-image"></div>
+            <div className="login-content">
+                    <div className="row">
+                        <div class="col-md-2"></div>
 
-            <BrowserRouter>
-              <p class="mt-5 mb-3 text-center">
-                <Route path="/register" />
-                <Link to="/register" onClick={() => {this.setState({status: "register"});}}>
-                  Create new account
-                </Link>
-              </p>
-            </BrowserRouter>
-          </form>
+                        <div className="col-md-4 login-message">
+                            <h1>NewsFilter</h1>
+                            <h5>Makes reading news a pleasant experience. 
+                            <br/>You can set your preferences
+                            and tag unwanted <br/> news articles.</h5>
+                        </div>
 
-          <footer class="mt-5 mb-3 text-muted text-center">Powered by <a href="http://newsapi.org" target="_blank">NewsAPI</a></footer>
+                        <div className="col-md-1"></div>
+
+                        <div className="card col-md-3 login-card">
+                          <div className="card-body">
+
+                              <form className="form-signin" onSubmit={this.handleSubmit}>
+                                <h1 className="h3 mb-3 font-weight-normal text-center">{message}</h1>
+                                <label for="inputEmail" className="sr-only">Email address</label>
+                                <input type="email" name="email" value={this.state.email} onChange={this.handleEmailChange} className="form-control" placeholder="Email address" required autofocus/>
+                                <label for="inputPassword" className="sr-only">Password</label>
+                                <input type="password" name="password" value={this.state.password} onChange={this.handlePasswordChange} className="form-control" placeholder="Password" required/>
+                                <button className="btn btn-lg btn-block nf-btn" type="submit" value="Submit">Sign in</button>
+
+                                <BrowserRouter>
+                                  <p className="mt-5 mb-3 text-center">
+                                    <Route path="/register" />
+                                    <Link to="/register" onClick={() => {this.setState({status: "register"});}}>
+                                      Create new account
+                                    </Link>
+                                  </p>
+                                </BrowserRouter>
+                              </form>
+
+                            <footer className="mt-5 mb-3 text-muted text-center">Powered by <a href="http://newsapi.org" target="_blank" rel="noopener noreferrer">NewsAPI</a></footer>
+                          </div>
+                        </div>
+
+                        <div className="col-md-2">
+                        </div>
+                    </div>
+
+            </div>
         </div>
       )
     }

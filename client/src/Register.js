@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import {logInForm, registerButton} from "./styles";
-import {Button, Form, FormGroup, Row, Col} from 'reactstrap';
 import Login from "./Login";
 const API = "http://localhost:5000/register";
 
@@ -66,16 +64,41 @@ class Register extends Component {
         message = "Please register here";
       }
       return(
-        <form className="form-signin" onSubmit={this.handleSubmit}>
-          <h1 className="h3 mb-3 font-weight-normal text-center">{message}</h1>
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" value={this.state.email} onChange={this.handleEmailChange} class="form-control" placeholder="Email address" required autofocus/>
-          <label for="inputPassword" className="sr-only">Password</label>
-          <input type="password" value={this.state.password} onChange={this.handlePasswordChange} className="form-control" placeholder="Password" required/>
-          <label for="inputTriggers" className="sr-only">Triggers</label>
-          <input type="triggers" value={this.state.triggers} onChange={this.handleTriggerChange} className="form-control" placeholder="Triggers" required/>
-          <button className="btn btn-lg btn-block nf-btn" type="submit" value="Submit">Create Account</button>
-        </form>
+        <div>
+          <div className="login-background-image"></div>
+          <div className="register-content">
+            <div className = "row">
+              <div class="col-md-2"></div>
+              
+              <div className = "col-md-4 register-message">
+              <h1>NewsFilter</h1>
+                <h5>Makes reading news a pleasant experience. 
+                            <br/>You can set your preferences
+                            and tag unwanted <br/> news articles.</h5>
+              </div>
+
+              <div className="col-md-1"></div>
+              
+              <div className="card col-md-3 register-card">
+                <div className="card-body">
+                  <form className="form-signin form-register" onSubmit={this.handleSubmit}>
+                    <h4 className="mb-3 font-weight-normal text-center">{message}</h4>
+                    <label for="inputEmail" className="sr-only">Email address</label>
+                    <input type="email" value={this.state.email} onChange={this.handleEmailChange} className="form-control" placeholder="Email address" required autofocus/>
+                    <label for="inputPassword" className="sr-only">Password</label>
+                    <input type="password" value={this.state.password} onChange={this.handlePasswordChange} className="form-control" placeholder="Password" required/>
+                    <label for="inputTriggers" className="sr-only">Triggers</label>
+                    <input type="triggers" value={this.state.triggers} onChange={this.handleTriggerChange} className="form-control" placeholder="Triggers" required/>
+                    <button className="btn btn-lg btn-block nf-btn" type="submit" value="Submit">Create Account</button>
+                  </form>
+                </div>
+              </div>
+
+              <div className="col-md-2"></div>
+            </div>
+
+          </div>
+        </div>
       )
     }
   }

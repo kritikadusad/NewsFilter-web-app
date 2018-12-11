@@ -74,7 +74,7 @@ class Articlelist extends Component {
       }
 
       return (
-        <span>
+        <div className="article-body">
             <BrowserRouter>
             <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -141,7 +141,7 @@ class Articlelist extends Component {
               {articlesDiv}
             </div>
 
-          </span>
+          </div>
       );
     }
   }
