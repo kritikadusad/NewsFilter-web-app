@@ -40,7 +40,7 @@ class NewsArticle extends Component {
     }
 
     return (
-      <div className = "card flex-md-row mt-4 box-shadow h-md-250">
+      <div className = "card flex-md-row mt-4 h-md-250 bg-light">
         <div className = "col-md-9">
           <div className = "card-body d-flex flex-column align-items-start">
             <h4 className="mb-0">

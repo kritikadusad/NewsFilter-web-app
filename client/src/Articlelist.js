@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NewsArticle from "./NewsArticle";
 import Login from "./Login";
 import {Route,  NavLink, BrowserRouter} from "react-router-dom";
+import nf_logo from "./nf.png";
 
 const API = "http://localhost:5000/filtered-news";
 const logoutAPI = "http://localhost:5000/logout";
@@ -76,15 +77,17 @@ class Articlelist extends Component {
         <span>
             <BrowserRouter>
             <div>
-            <header className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
               <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNewsFilter" aria-controls="navbarNewsFilter" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
               <div className="collapse navbar-collapse" id="navbarNewsFilter">
+                <img src={nf_logo} height="30" hspace="5" className="d-inline-block align-top" alt="" />
                 <a href="/" className="navbar-brand">NewsFilter</a>
+
                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                  <li className="nav-item active">
-                    <NavLink className="nav-link" to="/newsarticle" onClick={()=>{
+                  <li className="nav-item">
+                    <NavLink className="nav-link active" to="/newsarticle" onClick={()=>{
                       this.fetchNews("world")}
                     }>
                     World
@@ -123,7 +126,7 @@ class Articlelist extends Component {
                   <button className="btn my-2 my-sm-0 nf-btn" onClick={this.logOut}>Log Out</button>
                 </form>
               </div>
-            </header>
+            </nav>
 
             <main role="main">
               <div className = "content">
