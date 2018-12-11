@@ -11,13 +11,13 @@ class Register extends Component {
                   triggers:""
                 };
   //Bindings: 
-  this.handleTheEmailChange = this.handleTheEmailChange.bind(this);
+  this.handleEmailChange = this.handleEmailChange.bind(this);
   this.handlePasswordChange = this.handlePasswordChange.bind(this);
   this.handleTriggerChange = this.handleTriggerChange.bind(this);
   this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleTheEmailChange(event) {
+  handleEmailChange(event) {
     this.setState({
                   email: event.target.value
                   });

@@ -107,24 +107,6 @@ def logout():
     return jsonify("logged out")
 
 
-@app.route('/user-preferences')
-def change_preferences(user_id):
-    """ User can change preference og trigger words or password"""
-    user = User.query.get(user_id)
-    trig_words = user.trig
-    return render_template('user_preferences.html', user_id=user_id, trig_words=trig_words)
-
-
-@app.route("/user.json")
-def user_info():
-    """Return information about user as JSON."""
-    # user = User.query.filter(User.email == session["user"]).first()
-    # user_json = {"user_id": user.user_id, "trig_words": user.trig}
-    user_json = {"user_id": 2, "trig_words": "rape"}
-    # return jsonify('hello')
-    return jsonify(user_json)
-
-
 @app.route('/preferences-updated', methods=['POST'])
 def update_preferences(user_id):
     """ Preferences for the user are updated in the database"""
@@ -155,9 +137,10 @@ def userpreferences():
     data = request.data
     news_type = json.loads(data)["option"]
     logged_user = json.loads(data)["user_email"]
+    search = json.loads(data)["search"]
     print("User logged in is: ", logged_user)
     print("News option selected: ", news_type)
-    # print("User logged in:", user_id)
+    print("Search content:", search)
     # Making a user object to access trigger word for that user.
     user = User.query.filter_by(email=logged_user).first()
 
@@ -191,8 +174,9 @@ def get_articles(news_type, trig_words):
                     'politics': 'politico.com',
                     'entertainment': 'ew.com',
                     'sports': 'espn.com',
-                    'guardian': 'theguardian.com'
-
+                    'guardian': 'theguardian.com',
+                    'nyt': 'nytimes.com',
+                    'search': 'news.google.com'
                     }
 
     domains = news_options[news_type]

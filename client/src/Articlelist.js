@@ -13,11 +13,19 @@ class Articlelist extends Component {
     this.state = {
       status: "",
       articles: [],
-      logged_user: this.props.logged_user
+      logged_user: this.props.logged_user,
+      search: ""
     };
+  //Bindings: 
+  this.handleSearchChange = this.handleSearchChange.bind(this);
   this.logOut = this.logOut.bind(this);
   }
 
+  handleSearchChange(event) {
+    this.setState({
+                  search: event.target.value
+                  });
+  }
 
   logOut(event) {
     console.log("Logging out")
@@ -36,7 +44,8 @@ class Articlelist extends Component {
     fetch(API, {
       method: "POST",
       body: JSON.stringify({ "option": option,
-      "user_email": this.props.logged_user })
+      "user_email": this.props.logged_user,
+      "search": this.state.search })
     })
     .then(response => response.json())
     .then(data => this.setState({ articles: data }))
@@ -120,6 +129,22 @@ class Articlelist extends Component {
                     }>
                     The Guardian
                     </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/newsarticle" onClick={()=>{
+                      this.fetchNews("nyt")}
+                    }>
+                    NY Times
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <form className="form-inline dropdown-item" onSubmit={()=>{
+                      this.fetchNews("google-news")}
+                    }>
+                      <label className="sr-only" for="inlineFormInputName2">Name</label>
+                      <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" onChange = {this.handleSearchChange} value = {this.state.search} placeholder="Search content"/>
+                      <button type="submit" className="btn btn-sm mb-2 nf-btn">Submit</button>
+                    </form>
                   </li>
                 </ul>
                 <form className="form-inline my-2 my-lg-0">

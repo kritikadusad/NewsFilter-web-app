@@ -11,7 +11,7 @@ class NewsArticle extends Component {
       title: this.props.title,
       trigger_words: "",
     };
-
+    
     this.handleTriggerWordChange = this.handleTriggerWordChange.bind(this);
     this.handleTriggerSubmit = this.handleTriggerSubmit.bind(this);
   }

@@ -93,7 +93,8 @@ a.navbar-brand {
 }
 
 img.card-img-right {
-    height: 100px; 
+    height: 150px;
+    width: 150px; 
 }
 
 button.nf-btn {
