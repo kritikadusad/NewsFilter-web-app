@@ -137,10 +137,10 @@ def userpreferences():
     data = request.data
     news_type = json.loads(data)["option"]
     logged_user = json.loads(data)["user_email"]
-    search = json.loads(data)["search"]
+    # search = json.loads(data)["search"]
     print("User logged in is: ", logged_user)
     print("News option selected: ", news_type)
-    print("Search content:", search)
+    # print("Search content:", search)
     # Making a user object to access trigger word for that user.
     user = User.query.filter_by(email=logged_user).first()
 
@@ -186,7 +186,6 @@ def get_articles(news_type, trig_words):
     for trig_word in trig_words:
         trig_words_str += trig_word + ', '
 
-    print("Here, domains is: ", domains)
     all_articles = newsapi.get_everything(q=f'-{trig_words_str}',
                                           domains=domains,
                                           from_param=f'{date.today()}',
