@@ -1,6 +1,7 @@
 """Filtered News"""
 
 from jinja2 import StrictUndefined
+from flask.ext.heroku import Heroku
 import os
 from flask import (Flask, render_template, redirect,
                    request, flash, session, jsonify, json)
@@ -21,6 +22,7 @@ newsapi = NewsApiClient(api_key=os.environ.get('MY_KEY_NAME'))
 
 app = Flask(__name__, template_folder="../client/public",
             static_folder="../client/src")
+heroku = Heroku(app)
 CORS(app)
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "ABC"
