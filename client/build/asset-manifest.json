@@ -1,16 +1,18 @@
 {
-  "main.css": "/static/css/main.cabb7f7c.chunk.css",
-  "main.js": "/static/js/main.e24843c2.chunk.js",
-  "main.js.map": "/static/js/main.e24843c2.chunk.js.map",
-  "static/css/1.88ed7b1d.chunk.css": "/static/css/1.88ed7b1d.chunk.css",
-  "static/js/1.66fafc74.chunk.js": "/static/js/1.66fafc74.chunk.js",
-  "static/js/1.66fafc74.chunk.js.map": "/static/js/1.66fafc74.chunk.js.map",
-  "runtime~main.js": "/static/js/runtime~main.229c360f.js",
-  "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
-  "static/media/index.css": "/static/media/news.0e4c44a3.png",
-  "static/css/main.cabb7f7c.chunk.css.map": "/static/css/main.cabb7f7c.chunk.css.map",
-  "static/css/1.88ed7b1d.chunk.css.map": "/static/css/1.88ed7b1d.chunk.css.map",
-  "index.html": "/index.html",
-  "precache-manifest.42314d2c1c26afac4c010615d4b3a918.js": "/precache-manifest.42314d2c1c26afac4c010615d4b3a918.js",
-  "service-worker.js": "/service-worker.js"
+  "files": {
+    "main.css": "/NewsFilter-web-app/static/css/main.8b418096.chunk.css",
+    "main.js": "/NewsFilter-web-app/static/js/main.ef780fd5.chunk.js",
+    "main.js.map": "/NewsFilter-web-app/static/js/main.ef780fd5.chunk.js.map",
+    "runtime~main.js": "/NewsFilter-web-app/static/js/runtime~main.4cf2687a.js",
+    "runtime~main.js.map": "/NewsFilter-web-app/static/js/runtime~main.4cf2687a.js.map",
+    "static/css/2.4f642d5c.chunk.css": "/NewsFilter-web-app/static/css/2.4f642d5c.chunk.css",
+    "static/js/2.679f0372.chunk.js": "/NewsFilter-web-app/static/js/2.679f0372.chunk.js",
+    "static/js/2.679f0372.chunk.js.map": "/NewsFilter-web-app/static/js/2.679f0372.chunk.js.map",
+    "index.html": "/NewsFilter-web-app/index.html",
+    "precache-manifest.839cf1c721afb89659dba1bc2ce45727.js": "/NewsFilter-web-app/precache-manifest.839cf1c721afb89659dba1bc2ce45727.js",
+    "service-worker.js": "/NewsFilter-web-app/service-worker.js",
+    "static/css/2.4f642d5c.chunk.css.map": "/NewsFilter-web-app/static/css/2.4f642d5c.chunk.css.map",
+    "static/css/main.8b418096.chunk.css.map": "/NewsFilter-web-app/static/css/main.8b418096.chunk.css.map",
+    "static/media/index.css": "/NewsFilter-web-app/static/media/news.0e4c44a3.png"
+  }
 }
