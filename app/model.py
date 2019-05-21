@@ -1,11 +1,12 @@
 """ Models and database functions for project db """
 
 from flask import Flask
+from flask_heroku import Heroku
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import ARRAY
 from datetime import date
 
-db = SQLAlchemy()
+db = SQLAlchemy(app)
 
 
 class User(db.Model):

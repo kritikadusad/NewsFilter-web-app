@@ -1,7 +1,7 @@
 """Filtered News"""
 
 from jinja2 import StrictUndefined
-from flask.ext.heroku import Heroku
+from flask._heroku import Heroku
 import os
 from flask import (Flask, render_template, redirect,
                    request, flash, session, jsonify, json)
