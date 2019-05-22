@@ -23,7 +23,7 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "postinstall": "npm install --prefix app  && npm install --prefix client",
+#    "postinstall": "npm install --prefix app  && npm install --prefix client",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
