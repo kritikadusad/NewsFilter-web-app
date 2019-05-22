@@ -20,8 +20,8 @@ import bcrypt
 from six import u
 newsapi = NewsApiClient(api_key=os.environ.get('MY_KEY_NAME'))
 
-app = Flask(__name__, template_folder="../client/public",
-            static_folder="../client/src")
+app = Flask(__name__, template_folder="../public",
+            static_folder="../src")
 heroku = Heroku(app)
 CORS(app)
 # Required to use Flask sessions and the debug toolbar
